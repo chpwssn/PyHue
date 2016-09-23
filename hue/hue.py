@@ -35,7 +35,12 @@ class Hue:
 					tmpConfig['user'] = input("Please enter username:")
 				else:
 					#user doesn't know username, prompt them to press button and get username
-					pass
+					response = input("Generating a username, press the button on your Hue station and press enter when ready.")
+					r = requests.post("http://{0}/api".format(tmpConfig['stationAddress']), json={"devicetype":"PyHue"})
+					tmpConfig['user'] = r.json()[0]['success']['username']
+					print("Got username {0}".format(tmpConfig['user']))
+				with open(configFile,"w") as writeFile:
+					writeFile.write(json.dumps(tmpConfig))
 			else:
 				if self.verbose:
 					print("No config file and autoConfig is disabled.")
