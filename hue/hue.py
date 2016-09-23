@@ -1,4 +1,5 @@
 #/usr/bin/python
+from hue import HueLight
 import requests,json,os
 
 DEFAULT_CONFIG_FILE="config.json"
@@ -78,4 +79,11 @@ class Hue:
 			state['hue'] = hue
 		print(state)
 		r = requests.put("http://{0}/api/{1}/lights/{2}/state".format(self.stationAddress, self.user, light), json = state)
-		
+
+	def getLights(self):
+		r = requests.get("http://{0}/api/{1}/lights".format(self.stationAddress,self.user))
+		light_dict = r.json()
+		light_count = len(light_dict.keys())
+		light_keys = light_dict.keys()
+		for key, value in light_dict.items():
+			hl = HueLight(value)
