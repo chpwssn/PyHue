@@ -65,7 +65,7 @@ class Hue:
 		return self.state
 			
 	#onoff - boolean, sat - int, bri - int, hue - int
-	def setLightState(self, light=1, on=None, sat=None, bri=None, hue=None):
+	def setLightState(self, light=1, on=None, sat=None, bri=None, hue=None, xy=None):
 		if not self.config:
 			return
 		state = {}
@@ -77,6 +77,8 @@ class Hue:
 			state['bri'] = bri
 		if not hue == None:
 			state['hue'] = hue
+		if not xy == None:
+			state['xy'] = [xy['x'],xy['y']]
 		print(state)
 		r = requests.put("http://{0}/api/{1}/lights/{2}/state".format(self.stationAddress, self.user, light), json = state)
 
@@ -87,3 +89,17 @@ class Hue:
 		light_keys = light_dict.keys()
 		for key, value in light_dict.items():
 			hl = HueLight(value)
+			
+	def rgbtocie(self, r, g, b, scale=256):
+		try:
+			r = r / scale
+			g = g / scale
+			b = b / scale
+			X = 0.4124*r + 0.3576*g + 0.1805*b
+			Y = 0.2126*r + 0.7152*g + 0.0722*b
+			Z = 0.0193*r + 0.1192*g + 0.9505*b
+			x = X / (X + Y + Z)
+			y = Y / (X + Y + Z)
+			return {"x":x, "y":y}
+		except Exception:
+			return {"x":0.6400744994567747,"y":0.3299705106316933}
