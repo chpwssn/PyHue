@@ -1,9 +1,9 @@
-#PyHue
+# PyHue
 *A Python library for Philips Hue Gen 2 Systems*
 
-##Getting Started
+## Getting Started
 
-###Configuration
+### Configuration
 PyHue uses a [JSON](http://json.org/) format configuration file. By default the library attempts to open a file titled `config.json`. If no configuration is supplied and _autoConfig_ is not disabled. The library will prompt the user for information about their Hue setup. 
 
 #### Automatically Generate Configuration File
@@ -17,7 +17,7 @@ To get started with a manually generated configuration file, follow the setup in
     
 Copy `config.example.json` to `config.json` and edit appropriately. You can then run `python3 example.py`.
 
-##Debian/Ubuntu Quick Start
+## Debian/Ubuntu Quick Start
     sudo apt-get install python3 python3-pip git
     git clone https://github.com/chpwssn/PyHue.git PyHue
     cd PyHue/
@@ -28,6 +28,6 @@ Copy `config.example.json` to `config.json` and edit appropriately. You can then
     #Generate Config File and Run Example
     python3 example.py
 
-##Requirements
+## Requirements
 
 This library does require `requests` which you can install by following the directions at http://docs.python-requests.org/en/master/ or by running `pip3 install -r requirements.txt`
